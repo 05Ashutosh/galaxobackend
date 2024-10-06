@@ -81,8 +81,8 @@ import lombok.Value;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+//import org.springframework.security.core.annotation.AuthenticationPrincipal;
+//import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -106,14 +106,14 @@ public class UserController {
     public UserController(ChatClient.Builder chatClientBuilder) {
         this.chatClient = chatClientBuilder.build();
     }
+//
+//    @GetMapping("/user-info")
+//    public Map<String, Object> userInfo(@AuthenticationPrincipal OAuth2User principal) {
+//        System.out.println(principal.getAttributes());
+//        return principal.getAttributes();
+//    }
 
-    @GetMapping("/user-info")
-    public Map<String, Object> userInfo(@AuthenticationPrincipal OAuth2User principal) {
-        System.out.println(principal.getAttributes());
-        return principal.getAttributes();
-    }
-
-    @GetMapping("make/story")
+    @GetMapping("make/story/")
     public ResponseEntity<Map<String, Object>> story(@RequestParam String planet) {
         Story existingStory = storyService.getByPlanet(planet);
         String storyContent;
@@ -141,15 +141,15 @@ public class UserController {
         return ResponseEntity.ok(stories);
     }
 
-    @GetMapping("/audio")
+    @GetMapping("/audio/")
     public ResponseEntity<?> getAudio(@RequestParam String planet) {
-//        Story existingStory = storyService.getByPlanet(planet);
-//        if (existingStory == null) {
-//            return ResponseEntity.notFound().build();
-//        }
+        Story existingStory = storyService.getByPlanet(planet);
+        if (existingStory == null) {
+            return ResponseEntity.notFound().build();
+        }
 
-//        String storyContent = storyService.getStoryContent(planet);
-        String storyContent = "Hi how are u aakash";
+        String storyContent = storyService.getStoryContent(planet);
+
 
         // Eleven Labs API settings
         String apiKey = "sk_0dd601f66cd92a60402b7187592f010147d8dbee43ae69f0";
@@ -197,3 +197,4 @@ public class UserController {
 
 
 }
+

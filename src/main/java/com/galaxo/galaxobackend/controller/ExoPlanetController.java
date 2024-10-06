@@ -22,10 +22,9 @@ public class ExoPlanetController {
 
     // Endpoint to get all exoplanets
 
-    @GetMapping("/all")
+    @GetMapping("/all/")
     public ResponseEntity<List<ExoPlanet>> getAllExoPlanets() {
-        List<ExoPlanet> exoPlanets = exoPlanetServices.getExoPlanets
-                ();
+        List<ExoPlanet> exoPlanets = exoPlanetServices.getExoPlanets();
         return ResponseEntity.ok(exoPlanets);
     }
 
